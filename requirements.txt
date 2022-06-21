@@ -1,4 +1,2 @@
 python-dotenv
 discord.py
-time
-json

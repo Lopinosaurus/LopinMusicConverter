@@ -33,14 +33,6 @@ async def on_message(message):
             await message.channel.send('{}'.format(message.author.mention) + ", your games are now registered !")
 
 
-    if message.content.lower().startswith('$ut'):
-        members = client.get_all_members()
-        for mb in members:
-            if mb.name == "Gx" and mb.activity.name == "League of Legends":
-                await message.channel.send("OMG Gx joue a LoL")
-
-
-
 @client.event
 async def on_member_update(before, after):
     if before.activity == after.activity:
