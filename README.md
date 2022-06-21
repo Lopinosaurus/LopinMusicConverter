@@ -1,2 +1,2 @@
-# RTCBotWorker
-The private worker instance of RTCBot
+# NoShower
+The private worker instance of NoShower
