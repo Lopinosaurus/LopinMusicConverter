@@ -44,6 +44,8 @@ def watch_games(member):
 
 
 def is_playing_lol(member):
+    if member.activity == None:
+        return False
     if member.activity.name == "League of Legend":
         return True
     return False

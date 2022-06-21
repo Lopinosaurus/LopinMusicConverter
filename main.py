@@ -35,18 +35,25 @@ async def on_message(message):
 
 @client.event
 async def on_member_update(before, after):
+
+    print ("Update triggered !")
+
     if before.activity == after.activity:
         return
 
     if not system_functions.is_registered(before):
         return
 
+    print ("Is Registered and activity changed !")
+
     if (not system_functions.is_playing_lol(before)) and system_functions.is_playing_lol(after):
         system_functions.start_time(after)
+        print(before.name + "started playing !")
         return
 
     if system_functions.is_playing_lol(before) and not system_functions.is_playing_lol(after):
         system_functions.add_global_time(after)
+        print(after.name + "stopped playing !")
         return
 
 client.run(TOKEN)
