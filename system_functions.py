@@ -62,6 +62,7 @@ def start_time(member):
     for ply_data in players_list:
         if member.id in ply_data:
             ply_data[1] = time.time()
+            ply_data[2] = "True"
             ply_file.seek(0)
             json.dump(ply_json, ply_file, indent=4)
             ply_file.truncate()
