@@ -1,6 +1,5 @@
 # bot.py
 # region Library
-from turtle import down
 import discord
 from dotenv import load_dotenv
 import os
@@ -35,3 +34,6 @@ async def on_message(message):
         dl_file = downloader.download_as_mp3(url)
         message.channel.send('{}'.format(message.author.mention) + ", you download is ready !", file = discord.File(dl_file))
         os.remove(dl_file)
+
+if __name__ == "__main__":
+    client.run(TOKEN)
