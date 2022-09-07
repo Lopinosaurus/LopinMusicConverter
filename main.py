@@ -24,15 +24,14 @@ async def on_message(message):
         return
 
     if message.content.startswith("dl mp3"):
-        message.channel.send('{}'.format(message.author.mention) + ", starting download...")
-        all_args = message.split()
+        await message.channel.send('{}'.format(message.author.mention) + ", starting download, might take a minute or two.")
+        all_args = message.content.split()
         url = all_args[2]
-        filetype = all_args[3]
         if len(all_args) < 3:
             await message.channel.send('{}'.format(message.author.mention) + ", you did not provide URL !")
             return
         dl_file = downloader.download_as_mp3(url)
-        message.channel.send('{}'.format(message.author.mention) + ", you download is ready !", file = discord.File(dl_file))
+        await message.channel.send('{}'.format(message.author.mention) + ", you download is ready !", file = discord.File(dl_file))
         os.remove(dl_file)
 
 if __name__ == "__main__":
