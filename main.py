@@ -1,23 +1,22 @@
 # bot.py
 # region Library
-import os
-import system_functions
+from turtle import down
 import discord
 from dotenv import load_dotenv
-import json
+import os
+import downloader
 #endregion
 
+#region Pre-config
 load_dotenv()
-TOKEN = os.getenv('TOKEN')
-
-intents = discord.Intents.all()
-client = discord.Client(intents=intents)
-
+TOKEN = os.getenv("TOKEN")
+intents = discord.Intents().all()
+client = discord.Client(intents = intents)
 
 @client.event
 async def on_ready():
-    print(f'{client.user.name} has connected !')
-    await client.change_presence(activity = discord.Game(name="$start | You are a fucking nerd"))
+    await client.change_presence(activity= discord.Game(name="Open-Source Youtube mp3 converter"))
+    print ("Downloader connected to Discord !")
 
 @client.event
 async def on_message(message):
@@ -25,35 +24,14 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.lower().startswith('$start'):
-        if system_functions.is_registered(message.author):
-            await message.channel.send('{}'.format(message.author.mention) + ", your League of Legends games are already looked up !")
-        else:
-            system_functions.watch_games(message.author)
-            await message.channel.send('{}'.format(message.author.mention) + ", your games are now registered !")
-
-
-@client.event
-async def on_member_update(before, after):
-
-    print ("Update triggered !")
-
-    if before.activity == after.activity:
-        return
-
-    if not system_functions.is_registered(before):
-        return
-
-    print ("Is Registered and activity changed !")
-
-    if (not system_functions.is_playing_lol(before)) and system_functions.is_playing_lol(after):
-        system_functions.start_time(after)
-        print(before.name + "started playing !")
-        return
-
-    if system_functions.is_playing_lol(before) and not system_functions.is_playing_lol(after):
-        system_functions.add_global_time(after)
-        print(after.name + "stopped playing !")
-        return
-
-client.run(TOKEN)
+    if message.content.startswith("dl mp3"):
+        message.channel.send('{}'.format(message.author.mention) + ", starting download...")
+        all_args = message.split()
+        url = all_args[2]
+        filetype = all_args[3]
+        if len(all_args) < 3:
+            await message.channel.send('{}'.format(message.author.mention) + ", you did not provide URL !")
+            return
+        dl_file = downloader.download_as_mp3(url)
+        message.channel.send('{}'.format(message.author.mention) + ", you download is ready !", file = discord.File(dl_file))
+        os.remove(dl_file)
