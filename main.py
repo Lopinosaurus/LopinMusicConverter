@@ -14,7 +14,7 @@ client = discord.Client(intents = intents)
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity= discord.Game(name="Open-Source Youtube mp3 converter"))
+    await client.change_presence(activity= discord.Game(name="dl mp3 <youtube_url>"))
     print ("Downloader connected to Discord !")
 
 @client.event
