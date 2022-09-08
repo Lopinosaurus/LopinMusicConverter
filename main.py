@@ -14,7 +14,7 @@ client = discord.Client(intents = intents)
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity= discord.Game(name="Open-Source Youtube mp3 converter"))
+    await client.change_presence(activity= discord.Game(name="dl mp3 <youtube_url>"))
     print ("Downloader connected to Discord !")
 
 @client.event
@@ -28,6 +28,9 @@ async def on_message(message):
         all_args = message.content.split()
         if len(all_args) < 3:
             await message.channel.send('{}'.format(message.author.mention) + ", you did not provide URL !")
+            return
+        if not downloader.is_supported(url):
+            await message.channel.send('{}'.format(message.author.mention) + ", this URL is not valid !")
             return
         url = all_args[2]
         dl_file = downloader.download_as_mp3(url)

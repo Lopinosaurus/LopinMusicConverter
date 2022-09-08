@@ -13,3 +13,9 @@ def download_as_mp3(vid_url):
         downloader.download([vid_info['webpage_url']])
     return filename
 
+def is_supported(url):
+    extractors = youtube_dl.extractor.gen_extractors()
+    for e in extractors:
+        if e.suitable(url) and e.IE_NAME != 'generic':
+            return True
+    return False
