@@ -24,7 +24,6 @@ async def on_message(message):
         return
 
     if message.content.startswith("dl mp3"):
-        await message.channel.send('{}'.format(message.author.mention) + ", starting download, might take a minute or two.")
         all_args = message.content.split()
         if len(all_args) < 3:
             await message.channel.send('{}'.format(message.author.mention) + ", you did not provide URL !")
