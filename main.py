@@ -28,10 +28,10 @@ async def on_message(message):
         if len(all_args) < 3:
             await message.channel.send('{}'.format(message.author.mention) + ", you did not provide URL !")
             return
+        url = all_args[2]
         if not downloader.is_supported(url):
             await message.channel.send('{}'.format(message.author.mention) + ", this URL is not valid !")
             return
-        url = all_args[2]
         dl_file = downloader.download_as_mp3(url)
         await message.channel.send('{}'.format(message.author.mention) + ", you download is ready !", file = discord.File(dl_file))
         os.remove(dl_file)
